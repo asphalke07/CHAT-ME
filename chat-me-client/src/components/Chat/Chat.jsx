@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import io from 'socket.io-client';
 import "./Chat.css";
 
+import InfoBar from '../InfoBar/InfoBar';
 
 let socket; //defining socket here
 
@@ -26,21 +27,27 @@ function Chat(){
     setRoom(room);
     // console.log(socket);
 
-    socket.emit('user',{name,room},()=>{
-      //callback for an error
+    socket.emit('join', { name, room }, (error) => {
+      if(error) {
+        alert(error);
+      }
     });
 
-    return()=>{
-      socket.emit('disconnect');
-      socket.off();
-    }
-  },[ENDPOINT,location.search]);
+ 
+  },[ENDPOINT,location.search]) ;
 
 
 
   return (
-    // <div>App</div>
-    <h1>hello akshay</h1>
+  
+    // <h1>hello akshay</h1>
+
+    <div className="outerContainer">
+    <div className="container">
+        <InfoBar room={room} />
+    </div>
+
+  </div>
   )
 }
 
