@@ -13,8 +13,15 @@ const router=require('./router');
 
 //setting up the server
 const app=express();
-const server=http.createServer(app); //creating server using http and express
-const io=socketio(server); //making connection to the server
+// const server=http.createServer(app); //creating server using http and express
+const server=app.listen(5000);
+// const io=socketio(server); //making connection to the server
+var io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
+
 
 //making REST Api calls
 app.use(cors());
@@ -58,6 +65,6 @@ io.on('connect', (socket) => {
 
 
 //giving a port for connection
-server.listen(process.env.PORT || 5000,function(){
-    console.log("Server is running on port 5000");
-});
+// server.listen(process.env.PORT || 5000,function(){
+//     console.log("Server is running on port 5000");
+// });
